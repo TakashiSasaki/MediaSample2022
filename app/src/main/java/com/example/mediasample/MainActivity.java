@@ -3,10 +3,13 @@ package com.example.mediasample;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -45,6 +48,30 @@ public class MainActivity extends AppCompatActivity {
                 .setOnCheckedChangeListener(
                         new LoopSwitchChangedListener()
                 );
+
+        //動画を表示するために表示領域（SurfaceView）を制御する
+        //SurfaceHolderを取得する。
+        //ここは複雑なので余裕があったら授業で。
+        SurfaceHolder surfaceHolder
+        =((SurfaceView)findViewById(R.id.surfaceView))
+                .getHolder();
+        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(@NonNull SurfaceHolder holder) {
+
+            }
+
+            @Override
+            public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+
+            }
+        });
+
     }//onCreate method
 
     @Override
