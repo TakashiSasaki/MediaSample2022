@@ -5,11 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.io.IOException;
 
@@ -38,12 +35,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }//try
-
-        //スイッチにオンオフを検出するリスナを与える
-        ((SwitchMaterial) findViewById(R.id.swLoop))
-                .setOnCheckedChangeListener(
-                        new LoopSwitchChangedListener()
-                );
     }//onCreate method
 
     @Override
@@ -77,18 +68,14 @@ public class MainActivity extends AppCompatActivity {
     }//PlayerPreparedListener class
 
     //再生が終了したときのリスナクラス。
-    //プレイヤーにループが設定されていても、
-    //一回の再生が終わるごとにこのリスナが呼び出される。
     private class PlayerCompletionListener
             implements MediaPlayer.OnCompletionListener {
 
         @Override
         public void onCompletion(MediaPlayer mp) {
-            if (!_player.isLooping()) {
-                //再生終了時には再生開始を促すテキストにする
-                ((Button) findViewById(R.id.btPlay))
-                        .setText(R.string.bt_play_play);
-            }//if
+            //再生終了時には再生開始を促すテキストにする
+            ((Button) findViewById(R.id.btPlay))
+                    .setText(R.string.bt_play_play);
         }//onCompletion method
     }//PlayerCompletionListener class
 
@@ -109,32 +96,5 @@ public class MainActivity extends AppCompatActivity {
         }//if
     }//onPlayButtonClick method
 
-    //戻るボタンが押されたとき
-    public void onBackButtonClick(View veiw) {
-        //再生位置を先頭に変更。
-        this._player.seekTo(0);
-    }//onBackButtonClick method
-
-    //進むボタンが押されたとき
-    public void onForwardButtonClick(View view) {
-        int duration = _player.getDuration();
-        _player.seekTo(duration);
-
-        //再生中でなければ再生を開始
-        if (!_player.isPlaying()) {
-            _player.start();
-        }
-    }//onForwardButtonClick method
-
-    //リピート再生のスイッチを検出するリスナ
-    private class LoopSwitchChangedListener
-            implements CompoundButton.OnCheckedChangeListener {
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView,
-                                     boolean isChecked) {
-            _player.setLooping(isChecked);
-        }//onCheckedChanged method
-    }//LoopSwitchChangedListener class
 
 }// MainActivity class
